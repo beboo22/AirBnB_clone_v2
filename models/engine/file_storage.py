@@ -20,7 +20,7 @@ class FileStorage:
         """do nothing"""
         pass
 
-    def all(self):
+    def all(self, cls=None):
         """ returns the dictionary __objects """
         return self.__objects
 
@@ -57,3 +57,9 @@ class FileStorage:
                         self.__objects[key] = cls(**value)
         except FileNotFoundError:
             pass
+
+    def delete(self, obj=None):
+        if obj is not None:
+            key = obj.__class__.__name__ + "." + obj.id
+            if key in self.__objects:
+                del self.__objects[key]
