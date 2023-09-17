@@ -6,6 +6,7 @@ import models
 
 Base = declarative_base()
 
+
 class BaseModel:
     """ Base Model Class """
 
