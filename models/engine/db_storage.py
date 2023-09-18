@@ -31,7 +31,8 @@ class DBStorage:
         if env == "test":
             Base.metadata.drop_all(self.__engine)
 
-    all(self, cls=None):
+    def all(self, cls=None):
+
         """ returns a dictionary of __object """
         dic = {}
         if cls:
