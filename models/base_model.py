@@ -14,7 +14,7 @@ class BaseModel():
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
-    def init(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """ initialize the function """
 
         self.id = str(uuid.uuid4())
@@ -23,7 +23,7 @@ class BaseModel():
 
         if kwargs:
             for key, value in kwargs.items():
-                if key == 'class':
+                if key == '__class__':
                     continue
                 elif key == 'id' and value is None:
                     continue
@@ -31,10 +31,10 @@ class BaseModel():
                     value = datetime.fromisoformat(value)
                 setattr(self, key, value)
 
-    def str(self):
+    def __str__(self):
         """ return string """
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        return '[{}] ({}) {}'.format(cls, self.id, self.dict)
+        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
     def save(self):
         """ updates the public instance attribute """
@@ -47,10 +47,9 @@ class BaseModel():
         """
         returns a dictionary containing
         all keys/values of __dict__ of the instance
-        """
-        dictionary = {}
-        dictionary.update(self.dict)
-        dictionary.update({'class':
+        """        dictionary = {}
+        dictionary.update(self.__dict__)
+        dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
