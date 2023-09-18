@@ -47,7 +47,8 @@ class BaseModel():
         """
         returns a dictionary containing
         all keys/values of __dict__ of the instance
-        """        dictionary = {}
+        """
+        dictionary = {}
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
