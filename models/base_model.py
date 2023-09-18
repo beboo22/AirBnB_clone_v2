@@ -23,7 +23,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """ initialize the function """
-       if kwargs:
+        if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
@@ -58,7 +58,7 @@ class BaseModel:
         returns a dictionary containing
         all keys/values of __dict__ of the instance
         """
-         new_dict = self.__dict__.copy()
+        new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
