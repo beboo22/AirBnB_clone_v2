@@ -13,6 +13,8 @@ from models.amenity import Amenity
 from models.review import Review
 from models import storage
 
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 class HBNBCommand(cmd.Cmd):
     __models = ["User", "BaseModel", "Place", "State", "City",
@@ -115,51 +117,44 @@ class HBNBCommand(cmd.Cmd):
                     li.append(str(obj))
             print(li)
 
-    def do_update(self, args):
-        """
-        Updates an instance based on the class name and
-        id by adding or updating attribute
-        """
-        splits = args.split()
-        if len(splits) == 0:
+    def do_update(self, arg):
+        """Update an instance based on the class name, id, attribute & value"""
+        args = shlex.split(arg)
+        integers = ["number_rooms", "number_bathrooms", "max_guest",
+                    "price_by_night"]
+        floats = ["latitude", "longitude"]
+        if len(args) == 0:
             print("** class name missing **")
-            return None
-
-        if splits[0] not in self.__models:
-            print("** class doesn't exist **")
-            return None
-
-        elif len(splits) == 1:
-            if splits[0] not in self.__models:
-                print("** class doesn't exist **")
-                return None
+        elif args[0] in classes:
+            if len(args) > 1:
+                k = args[0] + "." + args[1]
+                if k in models.storage.all():
+                    if len(args) > 2:
+                        if len(args) > 3:
+                            if args[0] == "Place":
+                                if args[2] in integers:
+                                    try:
+                                        args[3] = int(args[3])
+                                    except:
+                                        args[3] = 0
+                                elif args[2] in floats:
+                                    try:
+                                        args[3] = float(args[3])
+                                    except:
+                                        args[3] = 0.0
+                            setattr(models.storage.all()[k], args[2], args[3])
+                            models.storage.all()[k].save()
+                        else:
+                            print("** value missing **")
+                    else:
+                        print("** attribute name missing **")
+                else:
+                    print("** no instance found **")
             else:
                 print("** instance id missing **")
-                return None
+        else:
+            print("** class doesn't exist **")
 
-        all_objs = storage.all()
-        if f"{splits[0]}.{splits[1]}" in all_objs:
-            if len(splits) == 2:
-                print("** attribute name missing **")
-                return None
-            elif len(splits) == 3:
-                print("** value missing **")
-                return None
-        else:
-            print("** no instance found **")
-            return None
-        if splits[3].isdigit():
-            attr_value = int(splits[3])
-        else:
-            try:
-                attr_value = float(splits[3])
-            except ValueError:
-                attr_value = splits[3].replace('"', "")
-        for key, obj in all_objs.items():
-            if f"{splits[0]}.{splits[1]}" == key:
-                setattr(obj, splits[2], attr_value)
-                storage.save()
-                return None
 
     def default(self, line):
         """
@@ -230,9 +225,9 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return False
-        if args[0] in __models:
+        if args[0] in classes:
             new_dict = self._key_value_parser(args[1:])
-            instance = __models[args[0]](**new_dict)
+            instance = classes[args[0]](**new_dict)
         else:
             print("** class doesn't exist **")
             return False
