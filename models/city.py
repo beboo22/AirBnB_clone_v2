@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 from models.place import Place
 
 
-class City(BaseModel):
+class City(BaseModel, Base):
     """represent City class"""
     __tablename__ = "cities"
     name = Column(String(128), nullable=False)
