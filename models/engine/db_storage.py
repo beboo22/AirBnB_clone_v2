@@ -12,6 +12,8 @@ from models.place import Place
 from models.review import Review
 from models.amenity import Amenity
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 class DBStorage:
     """ class DBStorage """
@@ -70,3 +72,7 @@ class DBStorage:
         sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sec)
         self.__session = Session()
+
+    def close(self):
+        """call remove() method on the private session attribute"""
+        self.__session.remove()
