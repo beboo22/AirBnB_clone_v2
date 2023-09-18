@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """ all common attributes/methods for other classes """
-import uuid
-from datetime import datetime
-import models
-from sqlalchemy import Column, Integer, String ,DateTime
 from sqlalchemy.ext.declarative import declarative_base
-
+import uuid
+import models
+from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime
 Base = declarative_base()
 
 class BaseModel:
