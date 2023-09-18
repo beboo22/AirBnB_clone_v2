@@ -6,6 +6,8 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from models.place import Place
 from models.review import Review
+
+
 class User(BaseModel):
     """represent User class"""
     __tablename__ = "users"
