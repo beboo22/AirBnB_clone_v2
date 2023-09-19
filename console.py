@@ -279,11 +279,11 @@ class HBNBCommand(cmd.Cmd):
 
         for i, att_name in enumerate(args):
             if (i % 2 == 0):
-                att_val = args[i + 1]  # following item is value
+                att_val = args[i + 1]
                 if not att_name:  # check for att_name
                     print("** attribute name missing **")
                     return
-                if not att_val:  # check for att_value
+                if not att_val:
                     print("** value missing **")
                     return
                 if att_name in HBNBCommand.types:
