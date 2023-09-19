@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" all common attributes/methods for other classes """
+""" all common attributes&methods for other classes """
 import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
@@ -15,7 +15,7 @@ class BaseModel():
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
-        """ initialize the function """
+        """ initialize function """
 
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
