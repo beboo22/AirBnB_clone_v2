@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Place Module for HBNB project"""
+""" Module for HBNB project"""
 
 
 from models.review import Review
@@ -10,8 +10,6 @@ from sqlalchemy import Table
 from os import getenv
 from sqlalchemy.orm import relationship
 
-# association table for many to many relationship
-# between places and amenities
 place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id', String(60),
                              ForeignKey('places.id'),
@@ -22,7 +20,7 @@ place_amenity = Table('place_amenity', Base.metadata,
 
 
 class Place(BaseModel, Base):
-    """ A place to stay """
+    """ place class """
     __tablename__ = 'places'
 
     if getenv("HBNB_TYPE_STORAGE") == 'db':
@@ -56,7 +54,7 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self):
-            """The fo property.reviews"""
+            """ property.reviews """
             from models import storage
             all_reviews = storage.all(Review)
             list = []
@@ -67,7 +65,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """Getter attribute amenities"""
+            """ Getter attribute amenities """
             from models import storage
             list = []
             all_amenities = storage.all(Amenity)
@@ -78,6 +76,6 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, value):
-            """Setter for adding an Amenity.id to amenity_ids"""
+            """ Setter for adding an Amenity.id to amenity_ids """
             if isinstance(value, Amenity):
                 self.amenity_ids.append(value.id)
