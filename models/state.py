@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
+""" Module for HBNB project """
 from models.base_model import BaseModel, Base
 from os import getenv
 from sqlalchemy import Column, String
@@ -20,7 +20,7 @@ class State(BaseModel, Base):
 
         @property
         def cities(self):
-            """returns the list of City instances"""
+            """ returns the list of City instances """
             from models import storage
             all_city = storage.all(City)
             list = []
