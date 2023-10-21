@@ -3,7 +3,7 @@
 Starts a Flask web application
 """
 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -33,6 +33,11 @@ def pytxt(text='is cool'):
 @app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
     return '{} is a number'.format(n)
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def number_template(n):
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':
